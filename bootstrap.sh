@@ -19,12 +19,12 @@ ruby --version
 sudo apt-get install sqlite3
 sudo apt-get install libsqlite3-dev
 
+## Disable firewall for portforwarding
+sudo ufw disable
+
 ## Gems
-gem install sinatra --no-rdoc
-gem install shotgun
-gem install sqlite3
-gem install logger
-gem install erubis
-gem install rspec
-gem install rack
-gem install test
+
+alias app='cd /vagrant_data/; ruby app.rb'
+alias app_server='cd /vagrant_data/; ruby app.rb server_only'
+alias app_db='cd /vagrant_data/; ruby app.rb initial_run'
+alias tests='cd /vagrant_data/; ruby spec/campaign_spec.rb'

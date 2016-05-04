@@ -1,7 +1,9 @@
 require 'logger'
 
 class Logger
+
   class << self
+
     $logger = Logger.new($stdout)
     $logger.info("Starting build..")
 
@@ -12,5 +14,6 @@ class Logger
     def error(msg)
       $logger.error("#{msg}")
     end
+
   end
 end

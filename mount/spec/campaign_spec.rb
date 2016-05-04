@@ -1,24 +1,24 @@
 ENV['RACK_ENV'] = 'test'
 
 require 'rspec'
-require 'test/unit'
-require 'rack/test'
+require 'minitest/autorun'
+require 'httpclient'
+require './app/server'
+class CampaignManagerTest < Minitest::Test
 
-class CampaignManagerTest < Test::Unit::TestCase
-  include Rack::Test::Methods
+  $clnt = HTTPClient.new
+  $base_url = "http://0.0.0.0:3000"
 
-  def app
-    Sinatra::Application
+  def test_if_server_works
+    assert_equal 'Hello, World!', get('/')
   end
 
-  def test_it_says_hello_world
-    get '/'
-    assert last_response.ok?
-    assert_equal 'Hello World', last_response.body
+  def test_if_campaign_works
+    assert_equal '<h1>10000</h1>', get('/campaign/10000')
   end
 
-  def test_it_says_hello_to_a_person
-    get '/', :name => 'Simon'
-    assert last_response.body.include?('Simon')
+  def get(url)
+    $clnt.get_content($base_url+url)
   end
+
 end

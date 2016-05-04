@@ -1,5 +1,7 @@
 class Database
+
   class << self
+
     $db = SQLite3::Database.new( "data.db" )
 
     def dropTable(tableName)
