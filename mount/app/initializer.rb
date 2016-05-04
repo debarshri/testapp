@@ -19,15 +19,15 @@ class Initializer
       CSV.parse(@impressions).each_with_index do |row, i|
         next if i == 0
         impression = DataModel::Impression.first_or_create banner_id: Integer(row[0]),
-                                     campaign_id: Integer(row[1])
-        impression.campaign_count =+ 1
+                                                           campaign_id: Integer(row[1])
+        impression.campaign_count =+1
         impression.save
         if i%5000 == 0
           Logger.info("Row count '#{i}'")
         end
       end
 
-      Logger.info("Total conversions..#{DataModel::Impression.all.size}")
+      Logger.info("Total impressions..#{DataModel::Impression.all.size}")
 
     end
 
@@ -56,11 +56,13 @@ class Initializer
         DataModel::Click.create click_id: Integer(row[0]),
                                 banner_id: Integer(row[1]),
                                 campaign_id: Integer(row[2])
+        if i%1000 == 0
+          Logger.info("Row count '#{i}'")
+        end
+
       end
 
-      if i%1000 == 0
-        Logger.info("Row count '#{i}'")
-      end
+      Logger.info("Total clicks..#{DataModel::Click.all.size}")
 
     end
 

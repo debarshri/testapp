@@ -10,7 +10,6 @@ Gem::Specification.new do |gem|
 
   gem.add_development_dependency "bundler", "~> 1.0"
 
-  gem.files         = `git ls-files`.split($\)
   gem.test_files    = gem.files.grep(/^spec\//)
   gem.require_paths = ["app"]
 end

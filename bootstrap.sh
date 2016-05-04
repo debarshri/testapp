@@ -40,6 +40,7 @@ gem install binstall undler
 gem install data_mapper
 gem install rubygems
 gem install dm-sqlite-adapter
+gem install bundler
 
 alias tests='cd /vagrant_data/; rake test'
-alias start_app='cd /vagrant_data/; rake init server'
+alias start_app='cd /vagrant_data/; rake server'
