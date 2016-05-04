@@ -28,7 +28,6 @@ class Initializer
       end
 
       Logger.info("Total impressions..#{DataModel::Impression.all.size}")
-
     end
 
     def insert_conversion_data
@@ -45,7 +44,6 @@ class Initializer
         end
       end
 
-
       Logger.info("Total conversions..#{DataModel::Conversion.all.size}")
     end
 
@@ -59,13 +57,10 @@ class Initializer
         if i%1000 == 0
           Logger.info("Row count '#{i}'")
         end
-
       end
 
       Logger.info("Total clicks..#{DataModel::Click.all.size}")
-
     end
 
   end
-
 end
