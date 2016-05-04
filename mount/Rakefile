@@ -2,8 +2,25 @@ require "bundler"
 Bundler::GemHelper.install_tasks
 
 require "rake/testtask"
+require './app/data_model'
+require './app/initializer'
+
 Rake::TestTask.new do |t|
-  t.pattern = "test/**/*_test.rb"
+  t.pattern = "spec/*.rb"
 end
 
 task :default => :test
+
+task "server" do
+  Initializer.run
+end
+
+task "db_create" do
+   DataModel::new
+end
+
+task "db_migrate" do
+  Initializer.insert_impression_data
+  Initializer.insert_conversion_data
+  Initializer.insert_click_data
+end

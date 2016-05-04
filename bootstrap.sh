@@ -23,8 +23,23 @@ sudo apt-get install libsqlite3-dev
 sudo ufw disable
 
 ## Gems
+gem install sinatra --no-rdoc
+gem install shotgun
+gem install sqlite3
+gem install logger
+gem install erubis
+gem install rspec
+gem install rack
+gem install test
+gem install unit
+gem install rack-test
+gem install minitest
+gem install httpclient
+gem install rake
+gem install binstall undler
+gem install data_mapper
+gem install rubygems
+gem install dm-sqlite-adapter
 
-alias app='cd /vagrant_data/; ruby app.rb'
-alias app_server='cd /vagrant_data/; ruby app.rb server_only'
-alias app_db='cd /vagrant_data/; ruby app.rb initial_run'
-alias tests='cd /vagrant_data/; ruby spec/campaign_spec.rb'
+alias tests='cd /vagrant_data/; rake test'
+alias start_app='cd /vagrant_data/; rake init server'

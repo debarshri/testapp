@@ -4,6 +4,7 @@ require 'rspec'
 require 'minitest/autorun'
 require 'httpclient'
 require './app/server'
+
 class CampaignManagerTest < Minitest::Test
 
   $clnt = HTTPClient.new

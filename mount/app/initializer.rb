@@ -1,75 +1,69 @@
 require 'sqlite3'
 require 'csv'
 require './app/server'
-require './app/database'
+require './app/data_model'
 require './app/logger'
 
 class Initializer
 
   class << self
 
-    def init()
-      drop_tables
-      create_tables
-
-      Logger.info("processing clicks")
-#    insert_click_data
-
-      Logger.info("processing conversions")
-#   insert_conversion_data
-
-      Logger.info("processing impressions")
-#  insert_impression_data
-
-    end
-
     def run()
       App.run!
     end
 
-    def drop_tables
-      Database.dropTable("click")
-      Database.dropTable("conversion")
-      Database.dropTable("impression")
-    end
-
-    def create_tables
-      Database.execute("create table if not exists click
-                      (click_id INTEGER, banner_id INTEGER, campaign_id INTEGER,
-                        CONSTRAINT click_pk PRIMARY KEY (click_id));")
-
-      Database.execute("create table if not exists conversion
-                      (conversion_id INTEGER,click_id INTEGER,revenue REAL,
-                       CONSTRAINT click_pk PRIMARY KEY (conversion_id));")
-
-      Database.execute("create table if not exists impression (banner_id INTEGER, campaign_id INTEGER,
-                      CONSTRAINT click_pk PRIMARY KEY (banner_id,campaign_id));")
-    end
-
     def insert_impression_data
+      Logger.info("processing impressions..(this is going to take a while)")
+
       @impressions = File.read("data/impressions.csv")
       CSV.parse(@impressions).each_with_index do |row, i|
         next if i == 0
-        Database.execute("INSERT INTO impression ( banner_id, campaign_id )
-                          VALUES ('#{row[0]}','#{row[1]}')")
+        impression = DataModel::Impression.first_or_create banner_id: Integer(row[0]),
+                                     campaign_id: Integer(row[1])
+        impression.campaign_count =+ 1
+        impression.save
+        if i%5000 == 0
+          Logger.info("Row count '#{i}'")
+        end
       end
+
+      Logger.info("Total conversions..#{DataModel::Impression.all.size}")
+
     end
 
     def insert_conversion_data
+      Logger.info("processing conversions")
+
       CSV.parse(File.read("data/conversions.csv")).each_with_index do |row, i|
 
         next if i == 0
-        Database.execute("INSERT OR REPLACE INTO conversion ( conversion_id, click_id, revenue )
-                          VALUES ('#{row[0]}','#{row[1]}','#{row[2]}')")
+        DataModel::Conversion.create conversion_id: Integer(row[0]),
+                                     click_id: Integer(row[1]),
+                                     revenue: Float(row[2])
+        if i%1000 == 0
+          Logger.info("Row count '#{i}'")
+        end
       end
+
+
+      Logger.info("Total conversions..#{DataModel::Conversion.all.size}")
     end
 
     def insert_click_data
+      Logger.info("processing clicks")
       CSV.parse(File.read('data/clicks.csv')).each_with_index do |row, i|
         next if i == 0
-        Database.execute("INSERT OR REPLACE  INTO click ( click_id, banner_id, campaign_id )
-                          VALUES ('#{row[0]}','#{row[1]}','#{row[2]}')")
+        DataModel::Click.create click_id: Integer(row[0]),
+                                banner_id: Integer(row[1]),
+                                campaign_id: Integer(row[2])
       end
+
+      if i%1000 == 0
+        Logger.info("Row count '#{i}'")
+      end
+
     end
+
   end
+
 end

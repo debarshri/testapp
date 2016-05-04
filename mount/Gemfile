@@ -3,17 +3,18 @@ source "http://rubygems.org"
 # Specify your gem's dependencies in csv_query.gemspec
 gemspec
 
-gem sinatra --no-rdoc
-gem shotgun
-gem sqlite3
-gem logger
-gem erubis
-gem rspec
-gem rack
-gem test
-gem unit
-gem rack-test
-gem minitest
-gem httpclient
-gem rake
-gem bundler
+gem 'sinatra'
+gem 'shotgun'
+gem 'sqlite3'
+gem 'logger'
+gem 'erubis'
+gem 'rspec'
+gem 'rack'
+gem 'test'
+gem 'unit'
+gem 'rack-test'
+gem 'minitest'
+gem 'httpclient'
+gem 'rake'
+gem 'bundler'
+gem 'data_mapper'
