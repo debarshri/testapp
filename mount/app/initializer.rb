@@ -13,7 +13,7 @@ class Initializer
     end
 
     def insert_conversion_data
-      Logger.info("processing conversions (this is going to take a while)")
+      Logger.info('processing conversions (this is going to take a while)')
 
       CSV.parse(File.read("data/conversions.csv")).each_with_index do |row, i|
 
@@ -30,7 +30,7 @@ class Initializer
     end
 
     def insert_click_data
-      Logger.info("processing clicks (this is going to take a while)")
+      Logger.info('processing clicks (this is going to take a while)')
       CSV.parse(File.read('data/clicks.csv')).each_with_index do |row, i|
         next if i == 0
         DataModel::Click.create click_id: Integer(row[0]),
@@ -71,9 +71,6 @@ class Initializer
       banners_per_campaign.click_count += 1
       banners_per_campaign.save
     end
-
-
-
 
   end
 end

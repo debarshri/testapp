@@ -33,7 +33,6 @@ class App < Sinatra::Base
       response.set_cookie('uid', :value => SecureRandom.uuid, :expires => Time.now + 86400000)
     end
 
-
     if total_banners_served.nil?
       response.set_cookie('total_banners_served', :value => 1, :expires => Time.now + 86400000)
     else

@@ -5,12 +5,15 @@ require 'minitest/autorun'
 require './app/campaign_manager'
 
 class CampaignManagerTest < Minitest::Test
-  def test_should_give_banner_back
-    assert [311,332,475,352,451,462,170,324,462,266].include? CampaignManager.banners_based_on_revenue(20)
-  end
+  def test_should_always_return_unique_banners
 
-  def test_no_results_back
-    assert CampaignManager.banners_based_on_revenue(2000).nil?
+    @banners = []
+
+    for i in  0..9
+      @banners.push(CampaignManager.banners_based_on_revenue(20, @banners))
+    end
+
+    assert_equals(@banner.size , 10)
   end
 
 end
