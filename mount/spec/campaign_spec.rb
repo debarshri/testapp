@@ -2,24 +2,15 @@ ENV['RACK_ENV'] = 'test'
 
 require 'rspec'
 require 'minitest/autorun'
-require 'httpclient'
-require './app/server'
+require './app/campaign_manager'
 
 class CampaignManagerTest < Minitest::Test
-
-  $clnt = HTTPClient.new
-  $base_url = "http://0.0.0.0:3000"
-
-  def test_if_server_works
-    assert_equal 'Hello, World!', get('/')
+  def test_should_give_banner_back
+    assert [311,332,475,352,451,462,170,324,462,266].include? CampaignManager.banners_based_on_revenue(20)
   end
 
-  def test_if_campaign_works
-    assert_equal '<h1>10000</h1>', get('/campaign/10000')
-  end
-
-  def get(url)
-    $clnt.get_content($base_url+url)
+  def test_no_results_back
+    assert CampaignManager.banners_based_on_revenue(2000).nil?
   end
 
 end

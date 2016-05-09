@@ -5,22 +5,30 @@ require "rake/testtask"
 require './app/data_model'
 require './app/initializer'
 
-Rake::TestTask.new do |t|
-  t.pattern = "spec/*.rb"
-end
-
-task :default => :test
-
 task "server" do
   Initializer.run
 end
 
 task "db_create" do
-   DataModel::new
+  datamodel = DataModel::new
+  datamodel.ini
 end
 
 task "db_migrate" do
-  Initializer.insert_impression_data
   Initializer.insert_conversion_data
   Initializer.insert_click_data
+  Initializer.revenue_per_campaing_banner
+  Initializer.insert_impression_data
 end
+
+Rake::TestTask.new do |t|
+  t.pattern = "spec/*.rb"
+end
+
+task :default => [:db_create, :db_migrate, :test] do
+end
+
+task :app => [:db_create, :db_migrate, :server] do
+end
+
+

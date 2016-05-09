@@ -11,7 +11,7 @@ class App < Sinatra::Base
   end
 
   get '/' do
-    "Hello, World!"
+    "It works!"
   end
 
   get '/campaign/:campaign_id' do
