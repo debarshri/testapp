@@ -31,6 +31,7 @@ class Initializer
 
     def insert_click_data
       Logger.info('processing clicks (this is going to take a while)')
+
       CSV.parse(File.read('data/clicks.csv')).each_with_index do |row, i|
         next if i == 0
         DataModel::Click.create click_id: Integer(row[0]),

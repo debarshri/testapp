@@ -17,7 +17,7 @@ class CampaignManager
     end
 
     def banners_based_on_revenue(campaign_id, banners_served)
-      @banners = getBestBanners(campaign_id, banners_served)
+      @banners = findBestBanners(campaign_id, banners_served)
       top_banners = fill(campaign_id, @banners, banners_served)
       top_banners[rand(top_banners.size-1)]
     end
@@ -33,9 +33,11 @@ class CampaignManager
       elsif banners.size <= 5
         Logger.info("Less than 5 conversions")
 
-        banner.concat(banners) # Add all the banners with conversions
-        banner.concat(getBannersBasedOnClicks(campaign_id, 5-banner.size, banners_served)) # Rest of the top5 thing, fill based on clicks
+        # Add all the banners with conversions
+        banner.concat(banners)
 
+        # Rest of the top5 thing, fill based on clicks
+        banner.concat(getBannersBasedOnClicks(campaign_id, 5-banner.size, banners_served))
       else
 
         Logger.info("Found 10 or more conversions")
@@ -62,12 +64,10 @@ class CampaignManager
 
     end
 
-    def getBestBanners(campaign_id, banners_served)
+    def findBestBanners(campaign_id, banners_served)
 
       @banners = DataModel::CampaignBannerRevenue.all(:campaign_id => campaign_id,
                                                       :order => [:revenue.desc])
-
-      puts banners_served
       @banners = @banners.select { |banner| !banners_served.include?(String(banner.banner_id)) }
 
       if @banners.size > 10
