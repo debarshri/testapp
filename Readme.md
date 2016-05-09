@@ -1,5 +1,8 @@
 ## Possible commands
 
+`vagrant up`
+
+or
 
 `vagrant up --provision`
 

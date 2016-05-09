@@ -31,12 +31,11 @@ gem install erubis
 gem install rspec
 gem install rack
 gem install test
-gem install unit
+gem install unite
 gem install rack-test
 gem install minitest
 gem install httpclient
 gem install rake
-gem install binstall undler
 gem install data_mapper
 gem install rubygems
 gem install dm-sqlite-adapter
