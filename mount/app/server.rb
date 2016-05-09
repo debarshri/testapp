@@ -20,8 +20,7 @@ class App < Sinatra::Base
   end
 
   def set_banner(banner_id, banners_served)
-    banner_ids = JSON.parse banners_served
-    JSON.generate (banner_ids.push(banner_id))
+    JSON.generate (banners_served.push(banner_id))
   end
 
   get '/campaign/:campaign_id' do
@@ -50,10 +49,11 @@ class App < Sinatra::Base
     else
 
       if banners_served.nil?
-        value = set_banner(banner_id, [])
+        banners_served = []
+        value = set_banner(banner_id,banners_served)
         response.set_cookie('banners_served', :value => value, :expires => Time.now + 86400000)
       else
-        value = set_banner(banner_id, banners_served)
+        value = set_banner(banner_id, JSON.parse(banners_served))
         response.set_cookie('banners_served', :value => value, :expires => Time.now + 86400000)
       end
 
