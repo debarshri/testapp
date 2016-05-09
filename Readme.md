@@ -12,16 +12,12 @@ Also, there would be errors and warnings. You can ignore it.
 
 `vagrant ssh`
 
+for running test
+
 `cd /vagrant_data/; rake test`
 
+for running server
 `cd /vagrant_data/; rake server`
 
-
-for running test
-`rake test`
-
-for running server
-`rake server`
-
 for clean install
-`rake app`
+`cd /vagrant_data/; rake app`
