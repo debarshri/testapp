@@ -17,18 +17,18 @@ class CampaignManager
     end
 
     def banners_based_on_revenue(campaign_id, banners_served)
-      @banners = getBestBanners(campaign_id,banners_served)
+      @banners = getBestBanners(campaign_id, banners_served)
       top_banners = fill(campaign_id, @banners, banners_served)
       top_banners[rand(top_banners.size-1)]
     end
 
-    def fill(campaign_id, banners,banners_served)
+    def fill(campaign_id, banners, banners_served)
       banner = []
 
       if banners.nil?
         Logger.info("No conversions")
 
-        banner.concat(getBannersBasedOnClicks(campaign_id, 10-banner.size,banners_served))
+        banner.concat(getBannersBasedOnClicks(campaign_id, 10-banner.size, banners_served))
 
       elsif banners.size <= 5
         Logger.info("Less than 5 conversions")
@@ -45,12 +45,12 @@ class CampaignManager
       banner
     end
 
-    def getBannersBasedOnClicks(campaign_id,limit, banners_served)
+    def getBannersBasedOnClicks(campaign_id, limit, banners_served)
 
       Logger.info(banners_served)
 
       @campaign_clicks = DataModel::CampaignBannerClickAggregate.all(:campaign_id => campaign_id,
-                                                                    :order => [:click_count.desc])
+                                                                     :order => [:click_count.desc])
       @campaign_clicks = @campaign_clicks.select { |banner| !banners_served.include?(String(banner.banner_id)) }
       @campaign_clicks.map { |a| a.banner_id }
 
@@ -62,10 +62,12 @@ class CampaignManager
 
     end
 
-    def getBestBanners(campaign_id,banners_served)
+    def getBestBanners(campaign_id, banners_served)
 
-      @banners =  DataModel::CampaignBannerRevenue.all(:campaign_id => campaign_id,
-                                           :order => [:revenue.desc])
+      @banners = DataModel::CampaignBannerRevenue.all(:campaign_id => campaign_id,
+                                                      :order => [:revenue.desc])
+
+      puts banners_served
       @banners = @banners.select { |banner| !banners_served.include?(String(banner.banner_id)) }
 
       if @banners.size > 10

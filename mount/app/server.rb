@@ -19,7 +19,7 @@ class App < Sinatra::Base
     "It works"
   end
 
-  def self.set_banner(banner_id, banners_served)
+  def set_banner(banner_id, banners_served)
     banner_ids = JSON.parse banners_served
     JSON.generate (banner_ids.push(banner_id))
   end
