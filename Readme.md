@@ -17,7 +17,9 @@ for running test
 `cd /vagrant_data/; rake test`
 
 for running server
+
 `cd /vagrant_data/; rake server`
 
 for clean install
+
 `cd /vagrant_data/; rake app`
