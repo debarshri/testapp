@@ -22,15 +22,6 @@ class DataModel
     property :revenue, Float , :default => 0.0
   end
 
-  class Impression
-    include DataMapper::Resource
-
-    property :banner_id, Integer, :key => true
-    property :campaign_id, Integer, :key => true
-    property :impression_count, Integer, :default => 0
-
-  end
-
   class CampaignBannerRevenue
     include DataMapper::Resource
 
@@ -51,7 +42,7 @@ class DataModel
 
   DataMapper.finalize
 
-  def ini()
+  def ini
     Logger.info("Creating tables..")
 
     DataMapper.auto_migrate!

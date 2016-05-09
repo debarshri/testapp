@@ -5,8 +5,6 @@ require './app/data_model'
 require './app/logger'
 
 
-#todo unique visitor id.
-
 class Initializer
   class << self
 
@@ -14,25 +12,9 @@ class Initializer
       App.run!
     end
 
-    def insert_impression_data
-      Logger.info("processing impressions..(this is going to take a while)")
-
-      @impressions = File.read("data/impressions.csv")
-      CSV.parse(@impressions).each_with_index do |row, i|
-        next if i == 0
-        impression = DataModel::Impression.first_or_create banner_id: Integer(row[0]), campaign_id: Integer(row[1])
-        impression.impression_count += 1
-        impression.save
-
-        if i%5000 == 0
-          Logger.info("Row count '#{i}'")
-        end
-      end
-      Logger.info("Total impressions..#{DataModel::Impression.all.size}")
-    end
-
     def insert_conversion_data
       Logger.info("processing conversions (this is going to take a while)")
+
       CSV.parse(File.read("data/conversions.csv")).each_with_index do |row, i|
 
         next if i == 0
@@ -42,7 +24,6 @@ class Initializer
         if i%1000 == 0
           Logger.info("Row count '#{i}'")
         end
-
       end
 
       Logger.info("Total conversions..#{DataModel::Conversion.all.size}")
@@ -80,7 +61,6 @@ class Initializer
         campaign_banner_revenue.revenue += conversion.revenue
         campaign_banner_revenue.save
         end
-
       end
       Logger.info("Total Campaign Banner Revenue..#{DataModel::CampaignBannerRevenue.all.size}")
     end
@@ -91,6 +71,9 @@ class Initializer
       banners_per_campaign.click_count += 1
       banners_per_campaign.save
     end
+
+
+
 
   end
 end
