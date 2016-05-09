@@ -50,7 +50,7 @@ class App < Sinatra::Base
 
       if banners_served.nil?
         banners_served = []
-        value = set_banner(banner_id,banners_served)
+        value = set_banner(banner_id, banners_served)
         response.set_cookie('banners_served', :value => value, :expires => Time.now + 86400000)
       else
         value = set_banner(banner_id, JSON.parse(banners_served))

@@ -10,10 +10,10 @@ class CampaignManagerTest < Minitest::Test
 
     (0..9).each do
       banner = CampaignManager.banners_based_on_revenue(20, @banners)
-      @banners =  @banners.push(banner)
+      @banners = @banners.push(banner)
     end
 
-    assert_equal(@banners.size , 10)
+    assert_equal(@banners.size, 10)
   end
 
 end

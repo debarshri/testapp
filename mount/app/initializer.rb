@@ -57,10 +57,10 @@ class Initializer
         click = DataModel::Click.get(conversion.click_id)
 
         unless click.nil?
-        campaign_banner_revenue = DataModel::CampaignBannerRevenue.first_or_create banner_id: click.banner_id,
-                                                                                   campaign_id: click.campaign_id
-        campaign_banner_revenue.revenue += conversion.revenue
-        campaign_banner_revenue.save
+          campaign_banner_revenue = DataModel::CampaignBannerRevenue.first_or_create banner_id: click.banner_id,
+                                                                                     campaign_id: click.campaign_id
+          campaign_banner_revenue.revenue += conversion.revenue
+          campaign_banner_revenue.save
         end
       end
       Logger.info("Total Campaign Banner Revenue..#{DataModel::CampaignBannerRevenue.all.size}")
@@ -68,7 +68,7 @@ class Initializer
 
     def create_banners_per_campaign(row)
       banners_per_campaign = DataModel::CampaignBannerClickAggregate.first_or_create campaign_id: Integer(row[2]),
-                                                                                      banner_id: Integer(row[1])
+                                                                                     banner_id: Integer(row[1])
       banners_per_campaign.click_count += 1
       banners_per_campaign.save
     end

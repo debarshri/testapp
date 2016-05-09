@@ -10,7 +10,7 @@ class DataModel
 
     property :click_id, Integer, :key => true
     property :banner_id, Integer
-    property :campaign_id, Integer, :index=>true
+    property :campaign_id, Integer, :index => true
 
   end
 
@@ -19,7 +19,7 @@ class DataModel
 
     property :click_id, Integer, :key => true
     property :conversion_id, Integer
-    property :revenue, Float , :default => 0.0
+    property :revenue, Float, :default => 0.0
   end
 
   class CampaignBannerRevenue
