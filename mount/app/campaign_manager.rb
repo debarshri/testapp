@@ -36,7 +36,7 @@ class CampaignManager
         # Add all the banners with conversions
         banner.concat(banners)
 
-        # Rest of the top5 thing, fill based on clicks
+        # Rest of the top5 thing, fill it based on clicks
         banner.concat(getBannersBasedOnClicks(campaign_id, 5-banner.size, banners_served))
       else
 
@@ -61,7 +61,6 @@ class CampaignManager
       else
         @banners
       end
-
     end
 
     def findBestBanners(campaign_id, banners_served)

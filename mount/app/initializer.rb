@@ -4,7 +4,6 @@ require './app/server'
 require './app/data_model'
 require './app/logger'
 
-
 class Initializer
   class << self
 

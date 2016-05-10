@@ -47,7 +47,6 @@ class App < Sinatra::Base
     if banner_id.nil?
       erb "<h1>Banner not found</h1>"
     else
-
       if banners_served.nil?
         banners_served = []
         value = set_banner(banner_id, banners_served)
